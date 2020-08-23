@@ -1,60 +1,91 @@
 <?php
-/***
- * WordPress's Debianised default master config file
- * Please do NOT edit and learn how the configuration works in
- * /usr/share/doc/wordpress/README.Debian
- ***/
+/**
+* The base configuration for WordPress
+*
+* The wp-config.php creation script uses this file during the
+* installation. You don't have to use the web site, you can
+* copy this file to "wp-config.php" and fill in the values.
+*
+* This file contains the following configurations:
+*
+* * MySQL settings
+* * Secret keys
+* * Database table prefix
+* * ABSPATH
+*
+* @link https://wordpress.org/support/article/editing-wp-conf..
+*
+* @package WordPress
+*/
 
-/* Look up a host-specific config file in
- * /etc/wordpress/config-<host>.php or /etc/wordpress/config-<domain>.php
- */
-$debian_server = preg_replace('/:.*/', "", $_SERVER['HTTP_HOST']);
-$debian_server = preg_replace("/[^a-zA-Z0-9.\-]/", "", $debian_server);
-$debian_file = '/etc/wordpress/config-'.strtolower($debian_server).'.php';
-/* Main site in case of multisite with subdomains */
-$debian_main_server = preg_replace("/^[^.]*\./", "", $debian_server);
-$debian_main_file = '/etc/wordpress/config-'.strtolower($debian_main_server).'.php';
+// ** MySQL settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define( 'DB_NAME', 'ft_database' );
 
-if (file_exists($debian_file)) {
-    require_once($debian_file);
-    define('DEBIAN_FILE', $debian_file);
-} elseif (file_exists($debian_main_file)) {
-    require_once($debian_main_file);
-    define('DEBIAN_FILE', $debian_main_file);
-} elseif (file_exists("/etc/wordpress/config-default.php")) {
-    require_once("/etc/wordpress/config-default.php");
-    define('DEBIAN_FILE', "/etc/wordpress/config-default.php");
-} else {
-    header("HTTP/1.0 404 Not Found");
-    echo "Neither <b>$debian_file</b> nor <b>$debian_main_file</b> could be found. <br/> Ensure one of them exists, is readable by the webserver and contains the right password/username.";
-    exit(1);
+/** MySQL database username */
+define( 'DB_USER', 'jiandre' );
+
+/** MySQL database password */
+define( 'DB_PASSWORD', 'root' );
+
+/** MySQL hostname */
+define( 'DB_HOST', 'localhost' );
+
+/** Database Charset to use in creating database tables. */
+define( 'DB_CHARSET', 'utf8' );
+
+/** The Database Collate type. Don't change this if in doubt. */
+define( 'DB_COLLATE', '' );
+
+/**#@+
+* Authentication Unique Keys and Salts.
+*
+* Change these to different unique phrases!
+* You can generate these using the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}
+* You can change these at any point in time to invalidate all existing cookies. This will force all users to have to log in again.
+*
+* @since 2.6.0
+*/
+
+define('AUTH_KEY', '3^_%9VxkGr(Iq_L#%o|xPetFJ6N^y=p9D&fBpbgk[(Ag4NTFwb5ckxvEbabafRE.');
+define('SECURE_AUTH_KEY', '#vU_{>/FMfD nom1lrs+x,L{ W$1X>O6ZP 2)I{ S7Cc.nXF]<p-mdk =^u+Nj!');
+define('LOGGED_IN_KEY', '~HjaFn^?*BQ}7<6`(+FL:T2g~3T::,8~Y+ryH-q;t{83d-t 5OFD-+Tka5i{dj`r');
+define('NONCE_KEY', '0jVc2-/I;?CL)0cNf~B~Ypg[?sdafF|bq,gCx<M[f.{}K bq@r[h4~(M`}w:#oTf');
+define('AUTH_SALT', '~6!`6HV;lSlQRyORM11H;p(|MU6bJ34a1ALeU*iypyln*_ crHtg Zh-G vEjytP');
+define('SECURE_AUTH_SALT', 'wSRj.t`TwZ1qb*l=KQC$X9:vV2S nziw.C+lBHL)o0b&|`iFZ_$I73jx&V.~(5Uw');
+define('LOGGED_IN_SALT', ': UyyR#>Tm+VIlswk!4T7=Qr9pG|Z!xhJ$p /v&,y[+yi6(Z+(GVF,Ipbq_@C[Us');
+define('NONCE_SALT', 'a9Iw*9.YU|=*R.aB}|ZQ]6}({Om[/@#Bt{Qyvk(UO8Cq%A^vZgK=ku#I~$NRO=Al');
+
+/**#@-*/
+
+/**
+* WordPress Database Table prefix.
+*
+* You can have multiple installations in one database if you give each
+* a unique prefix. Only numbers, letters, and underscores please!
+*/
+$table_prefix = 'wp_';
+
+/**
+* For developers: WordPress debugging mode.
+*
+* Change this to true to enable the display of notices during development.
+* It is strongly recommended that plugin and theme developers use WP_DEBUG
+* in their development environments.
+*
+* For information on other constants that can be used for debugging,
+* visit the documentation.
+*
+* @link https://wordpress.org/support/article/debugging-in-wo..
+*/
+define( 'WP_DEBUG', false );
+
+/* That's all, stop editing! Happy publishing. */
+
+/** Absolute path to the WordPress directory. */
+if ( ! defined( 'ABSPATH' ) ) {
+define( 'ABSPATH', __DIR__ . '/' );
 }
 
-/* Default value for some constants if they have not yet been set
-   by the host-specific config files */
-if (!defined('ABSPATH'))
-    define('ABSPATH', '/usr/share/wordpress/');
-if (!defined('WP_CORE_UPDATE'))
-    define('WP_CORE_UPDATE', false);
-if (!defined('WP_ALLOW_MULTISITE'))
-    define('WP_ALLOW_MULTISITE', true);
-if (!defined('DB_NAME'))
-    define('DB_NAME', 'ft_database');
-if (!defined('DB_USER'))
-    define('DB_USER', 'jiandre');
-if (!defined('DB_HOST'))
-    define('DB_HOST', 'localhost');
-if (!defined('WP_CONTENT_DIR') && !defined('DONT_SET_WP_CONTENT_DIR'))
-    define('WP_CONTENT_DIR', '/var/lib/wordpress/wp-content');
-
-/* Default value for the table_prefix variable so that it doesn't need to
-   be put in every host-specific config file */
-if (!isset($table_prefix)) {
-    $table_prefix = 'wp_';
-}
-
-if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
-    $_SERVER['HTTPS'] = 'on';
-
-require_once(ABSPATH . 'wp-settings.php');
-?>
+/** Sets up WordPress vars and included files. */
+require_once ABSPATH . 'wp-settings.php';

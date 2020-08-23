@@ -40,7 +40,7 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
 /* User used to manipulate with storage */
 // $cfg['Servers'][$i]['controlhost'] = '';
 // $cfg['Servers'][$i]['controlport'] = '';
-   $cfg['Servers'][$i]['controluser'] = 'root';
+   $cfg['Servers'][$i]['controluser'] = 'jiandre';
    $cfg['Servers'][$i]['controlpass'] = 'root';
 
 /* Storage database and tables */

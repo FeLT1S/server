@@ -6,7 +6,7 @@
 #    By: jiandre <kostbg1@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/04 17:36:06 by jiandre           #+#    #+#              #
-#    Updated: 2020/08/21 22:06:09 by jiandre          ###   ########.fr        #
+#    Updated: 2020/08/23 16:12:09 by jiandre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,13 +24,11 @@ COPY ./srcs/config.inc.php /var/www/html/phpmyadmin/
 COPY ./srcs/wp-config.php /var/www/html/wordpress/
 COPY ./srcs/server.crt /etc/ssl/certs/server.crt
 COPY ./srcs/server.key /etc/ssl/private/server.key
-COPY ./srcs/autoindex.sh /var/www/
+COPY ./srcs/autoindex.sh /
 COPY ./srcs/start.sh /
 
 RUN chmod +x start.sh
 RUN chown -R www-data var/www/html
-RUN bash /var/www/autoindex.sh
 
 EXPOSE 80 443
-ENTRYPOINT bash start.sh
-
+CMD bash start.sh
